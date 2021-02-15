@@ -1,0 +1,42 @@
+<!DOCTYPE = html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <body>
+  <center>
+  <br>
+  <label for="d">Digit:</label><br>
+  <input type="text" id="digit" name="d">
+  <button type="button" id="change">Change digit</button>
+  <br>
+  <h1 id="value">VALUE</h1>
+  <button type="button" id="clear">Clear all digits</button>
+  <button type="button" id="getDecimal">Get decimal value</button>
+  <script>
+      $(document).ready(function(){
+        $("#clear").click(function(){
+            $.post("https://api.particle.io/v1/devices/26003a001847393035313137/clear?access_token=f00b9f4de27969a8341deb802b357004d70354bf",{args: null})
+        });
+        $("#getDecimal").click(function(){
+            var url = "https://api.particle.io/v1/devices/26003a001847393035313137/decimal?access_token=f00b9f4de27969a8341deb802b357004d70354bf"
+            val = $.getJSON(url, function(data){
+              $.each(data, function(key, v){
+                if(key == "result"){
+                  $(value).text(v)
+                  console.log(v)
+                }
+                console.log(key)
+              })
+            })
+          });
+        $("#change").click(function(){
+            var digit = $("#digit").val();
+            $.post("https://api.particle.io/v1/devices/26003a001847393035313137/change?access_token=f00b9f4de27969a8341deb802b357004d70354bf",{args: digit})
+        });
+      });
+      
+  </script>
+  </center>
+  </body>
+</html>
